@@ -185,7 +185,32 @@ r = model.fit(
     callbacks=callbacks,
 )
 
-
-
 score = model.evaluate(X_test, y_test)
 print(score)
+
+plt.figure(figsize=(12,16))
+
+plt.subplot(4,2,1)
+plt.plot(r.history['loss'],label='Loss')
+plt.plot(r.history['val_loss'],label='val_Loss')
+plt.title('Loss Function evolution during training')
+plt.legend()
+
+plt.subplot(4,2,2)
+plt.plot(r.history['fn'],label='fn')
+plt.plot(r.history['val_fn'],label='val_fn')
+plt.title('Accuracy evolution during training')
+plt.legend()
+
+plt.subplot(4,2,3)
+plt.plot(r.history['precision'],label='precision')
+plt.plot(r.history['val_precision'],label='val_precision')
+plt.title('Precision evolution during training')
+plt.legend()
+
+plt.subplot(4,2,4)
+plt.plot(r.history['recall'],label='recall')
+plt.plot(r.history['val_recall'],label='val_recall')
+plt.title('Recall evolution during training')
+plt.legend()
+
