@@ -248,3 +248,49 @@ scores_dict['XGBoost'] = {
         'Test': f1_score(y_test, y_test_pred),
 }
 
+"""## CatBoost"""
+
+!pip install catboost
+
+from catboost import CatBoostClassifier
+
+cb_clf = CatBoostClassifier()
+cb_clf.fit(X_train,y_train)
+
+y_train_pred = cb_clf.predict(X_train)
+y_test_pred = cb_clf.predict(X_test)
+
+print_score(y_train, y_train_pred, train=True)
+print_score(y_test, y_test_pred, train=False)
+
+scores_dict['CatBoost'] = {
+        'Train': f1_score(y_train,y_train_pred),
+        'Test': f1_score(y_test, y_test_pred),
+}
+
+"""## LigthGBM
+
+"""
+
+from lightgbm import LGBMClassifier
+
+lgbm_clf = LGBMClassifier()
+lgbm_clf.fit(X_train, y_train)
+
+y_train_pred = lgbm_clf.predict(X_train)
+y_test_pred = lgbm_clf.predict(X_test)
+
+print_score(y_train, y_train_pred, train=True)
+print_score(y_test, y_test_pred, train=False)
+
+scores_dict['LigthGBM'] = {
+        'Train': f1_score(y_train,y_train_pred),
+        'Test': f1_score(y_test, y_test_pred),
+}
+
+scores_df = pd.DataFrame(scores_dict)
+
+scores_df.plot(kind='barh', figsize=(15, 8))
+
+
+
