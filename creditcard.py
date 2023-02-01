@@ -214,3 +214,37 @@ plt.plot(r.history['val_recall'],label='val_recall')
 plt.title('Recall evolution during training')
 plt.legend()
 
+# 모델 예측
+y_train_pred=model.predict(X_train)
+y_test_pred=model.predict(X_test)
+
+print_score(y_train,y_train_pred.round(), train=True)
+print_score(y_test,y_test_pred.round(),train=False)
+
+# score를 모아두는 dictionary 만들기
+scores_dict = {
+    'ANNs' : {
+        'Train' : f1_score(y_train,y_train_pred.round()),
+        'Test' : f1_score(y_test,y_test_pred.round()),
+    },
+}
+
+"""## XGBoost"""
+
+from xgboost import XGBClassifier
+
+xgb_clf = XGBClassifier()
+xgb_clf.fit(X_train,y_train,eval_metric='aucpr')
+
+y_train_pred= xgb_clf.predict(X_train)
+y_test_pred = xgb_clf.predict(X_test)
+
+print_score(y_train,y_train_pred, train=True)
+print_score(y_test,y_test_pred, train=False)
+
+# xgboost도 dictionary에 추가해주기.
+scores_dict['XGBoost'] = {
+        'Train': f1_score(y_train,y_train_pred),
+        'Test': f1_score(y_test, y_test_pred),
+}
+
